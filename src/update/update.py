@@ -8,7 +8,7 @@ def verifier_mise_a_jour():
     #Vérifie si une mise à jour est disponible sur la branche principale du dépôt GitHub.
     
     # Configuration
-    github_repo = "https://api.github.com/repos/Eunice755/seahawks-harvester"
+    github_repo = "https://github.com/Eunice755/seahawks-hardvester.git"
     branche = "main"
 
     try:
