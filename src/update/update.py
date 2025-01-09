@@ -8,36 +8,19 @@ def verifier_mise_a_jour():
     #Vérifie si une mise à jour est disponible sur la branche principale du dépôt GitHub.
     
     # Configuration
-    github_repo = "https://github.com/Eunice755/seahawks-hardvester.git"
-    branche = "main"
+    url = "https://github.com/Eunice755/seahawks-hardvester/tree/main"
+    
+    
 
     try:
-        # Requête à l'API GitHub pour récupérer la dernière version du dépôt
-        response = requests.get(f"{github_repo}/branches/{branche}")
-        response.raise_for_status()
+        # Requête à l'API GitHub pour vérifier les mise à jouur
+        response = requests.get(url)
+        response.raise_for_status() #Declenche une ereur pour les codes HTTP 4xx/5xx
+        print("Mise à jour vérifiée avec succès !")
 
-        # Lire le dernier commit SHA
-        remote_commit = response.json()["commit"]["sha"]
 
-        # Lire le dernier commit SHA local
-        result = subprocess.run(
-            ["git", "rev-parse", "HEAD"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True
-        )
-        local_commit = result.stdout.strip()
-
-        # Comparer les commits
-        if remote_commit != local_commit:
-            print("Une mise à jour est disponible.")
-            return True
-        else:
-            print("L'application est déjà à jour.")
-            return False
-
-    except Exception as e:
-        print(f"Erreur lors de la vérification de mise à jour : {e}")
+    except requests.exceptions.HTTPError as err:
+        print(f"Erreur lors de la vérification de mise à jour : {err}")
         return False
 
 
